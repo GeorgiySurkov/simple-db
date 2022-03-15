@@ -48,6 +48,14 @@ struct Statement {
     long long amount;
 };
 
+Statement *new_statement();
+
+void delete_statement(Statement *statement);
+
+Row *new_row();
+
+void delete_row(Row *row);
+
 ParseResult parse_statement(InputBuffer *input_buffer, Statement *statement);
 
 #endif //ROOM_FOR_SALE_STATEMENT_PREPROCESSOR_H

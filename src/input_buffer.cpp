@@ -28,7 +28,7 @@ void read_input(InputBuffer* input_buffer) {
     input_buffer->buffer[bytes_read - 1] = 0;
 }
 
-void close_input_buffer(InputBuffer* input_buffer) {
+void delete_input_buffer(InputBuffer* input_buffer) {
     free(input_buffer->buffer);
     free(input_buffer);
 }
