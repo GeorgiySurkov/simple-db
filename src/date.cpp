@@ -1,11 +1,12 @@
 #include <iostream>
 #include "date.h"
-#include "helpers.h"
 
 #define ERROR_MESSAGE_CAP_LEN 32
 
 ParseDateResult *new_parse_date_result() {
-    return new ParseDateResult;
+    auto res = new ParseDateResult;
+    res->error_message = nullptr;
+    return res;
 }
 
 void delete_parse_date_result(ParseDateResult *parse_date_result) {
@@ -45,8 +46,8 @@ ParseDateResult *parse_date(const char *str, Date *date) {
     }
     date->month = std::stoi(buffer);
 
-    //validating year
-    strncpy(buffer, str + 3, 2);
+    // validating year
+    strncpy(buffer, str + 6, 4);
     if (!isdigit(buffer[0]) || !isdigit(buffer[1]) || !isdigit(buffer[2]) || !isdigit(buffer[3])) {
         result->type = PARSE_DATE_WRONG_YEAR_FORMAT;
         result->error_message = new char[ERROR_MESSAGE_CAP_LEN + 4 + 1];
@@ -55,5 +56,6 @@ ParseDateResult *parse_date(const char *str, Date *date) {
     }
     date->year = std::stoi(buffer);
 
+    result->type = PARSE_DATE_SUCCESS;
     return result;
 }

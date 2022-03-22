@@ -12,15 +12,6 @@ void print_prompt() {
     printf(">> ");
 }
 
-void print_unknown_command_error_message(InputBuffer *command) {
-    printf("Unknown command: \"%s\"\n", command->buffer);
-}
-
-// TODO: display wrong arguments
-void print_wrong_arguments_error_message(InputBuffer *command) {
-    printf("Wrong arguments\n");
-}
-
 int main(){
     print_app_info();
     auto input_buffer = new_input_buffer();
@@ -29,23 +20,26 @@ int main(){
         read_input(input_buffer);
 
         auto statement = new_statement();
-        switch (parse_statement(input_buffer, statement)) {
+        auto parse_result = parse_statement(input_buffer, statement);
+        switch (parse_result->type) {
             case PARSE_SUCCESS:
+                switch (execute_statement(statement)) {
+                    case EXECUTE_SUCCESS:
+                        break;
+                    case EXECUTE_EXIT_SUCCESS:
+                        delete_input_buffer(input_buffer);
+                        delete_statement(statement);
+                        exit(EXIT_SUCCESS);
+                }
                 break;
-            case PARSE_UNKNOWN_COMMAND:
-                print_unknown_command_error_message(input_buffer);
-                continue;
-            case PARSE_WRONG_ARGUMENTS:
-                print_wrong_arguments_error_message(input_buffer);
-                continue;
+            default:
+                if (parse_result->error_message) {
+                    printf("%s\n", parse_result->error_message);
+                } else {
+                    printf("Error while parsing");
+                }
         }
-        switch (execute_statement(statement)) {
-            case EXECUTE_SUCCESS:
-                break;
-            case EXECUTE_EXIT_SUCCESS:
-                delete_input_buffer(input_buffer);
-                delete_statement(statement);
-                exit(EXIT_SUCCESS);
-        }
+        delete_parse_statement_result(parse_result);
+        delete_statement(statement);
     }
 }
