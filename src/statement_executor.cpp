@@ -52,7 +52,7 @@ ExecutionResult execute_statement(Statement *statement) {
             printf("found by ID %lld\n", statement->id);
             return EXECUTE_SUCCESS;
         case STATEMENT_EXIT:
-            printf("exiting...'n");
+            printf("exiting...\n");
             return EXECUTE_EXIT_SUCCESS;
     }
 }
