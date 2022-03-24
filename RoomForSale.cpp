@@ -1,8 +1,8 @@
 #include <iostream>
 
-#include "input_buffer.h"
-#include "statement_parser/statement_parser.h"
-#include "statement_executor.h"
+#include "src/input_buffer.h"
+#include "src/statement_parser/statement_parser.h"
+#include "src/statement_executor.h"
 
 void print_app_info() {
     printf("Room for sale command prompt (v1.0.0)\n");
@@ -15,7 +15,7 @@ void print_prompt() {
 int main(){
     print_app_info();
     auto input_buffer = new_input_buffer();
-	while (true) {
+    while (true) {
         print_prompt();
         read_input(input_buffer);
 

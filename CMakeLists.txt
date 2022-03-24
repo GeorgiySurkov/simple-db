@@ -8,7 +8,7 @@ file(
         "src/*.cpp"
         "src/*.h"
 )
-add_executable(room_for_sale ${sources})
+add_executable(room_for_sale RoomForSale.cpp ${sources})
 
 # specify the C++ standard
 set(CMAKE_CXX_STANDARD 20)
