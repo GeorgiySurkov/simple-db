@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.10)
 project(room_for_sale)
 
 file(
-        GLOB
+        GLOB_RECURSE
         sources
         "src/*.cpp"
         "src/*.h"

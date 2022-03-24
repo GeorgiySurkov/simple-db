@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "input_buffer.h"
-#include "statement_parser.h"
+#include "statement_parser/statement_parser.h"
 #include "statement_executor.h"
 
 void print_app_info() {

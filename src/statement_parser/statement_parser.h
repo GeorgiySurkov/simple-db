@@ -1,7 +1,7 @@
 #ifndef ROOM_FOR_SALE_STATEMENT_PREPROCESSOR_H
 #define ROOM_FOR_SALE_STATEMENT_PREPROCESSOR_H
-#include "input_buffer.h"
-#include "date.h"
+#include "../input_buffer.h"
+#include "../date.h"
 
 enum ParseStatementResultType {
     PARSE_SUCCESS,
