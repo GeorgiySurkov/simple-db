@@ -1,5 +1,5 @@
 #include "DatabaseManager.h"
-#include "lib/DBException.h"
+#include "DBException.h"
 
 namespace SimpleDB {
 

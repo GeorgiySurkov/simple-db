@@ -1,7 +1,7 @@
 #ifndef ROOM_FOR_SALE_DBEXCEPTION_H
 #define ROOM_FOR_SALE_DBEXCEPTION_H
 
-#include "./string.h"
+#include "lib/string.h"
 
 namespace SimpleDB {
     class DBException {

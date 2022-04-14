@@ -3,7 +3,7 @@
 
 #include <utility>
 
-#include "../lib/DBException.h"
+#include "../DBException.h"
 
 namespace SimpleDB {
     class StatementReadingError : public DBException {
