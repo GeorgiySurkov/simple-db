@@ -14,7 +14,12 @@ namespace SimpleDB {
             result.type = StatementType::LOAD;
             m_in >> result.file_name;
             return result;
+        } else if (command == "save") {
+            result.type = StatementType::SAVE;
+            m_in >> result.file_name;
+            return result;
+        } else {
+            throw StatementReadingError("Unknown command: " + command);
         }
-        throw StatementReadingError("Unknown command: " + command);
     }
 }

@@ -8,6 +8,8 @@ namespace SimpleDB {
             case StatementType::LOAD:
                 m_out << "loaded file " << s.file_name << std::endl;
                 return ExecutionResult::SUCCESS;
+            case StatementType::SAVE:
+                m_out << "saved file " << s.file_name << std::endl;
         }
     }
 }

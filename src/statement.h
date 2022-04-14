@@ -7,7 +7,7 @@
 namespace SimpleDB {
     enum class StatementType {
         LOAD,
-//        SAVE,
+        SAVE,
 //        ADD,
 //        DEL,
 //        PRINT,
