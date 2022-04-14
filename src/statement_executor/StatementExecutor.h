@@ -7,7 +7,7 @@ namespace SimpleDB {
     class StatementExecutor : public AbstractStatementExecutor {
     public:
         using AbstractStatementExecutor::AbstractStatementExecutor;
-        ExecutionResult execute_statement(Statement s) final;
+        ExecutionResult execute_statement(const Statement &s) final;
     };
 }
 

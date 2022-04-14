@@ -16,7 +16,7 @@ namespace SimpleDB {
             SUCCESS_EXIT,
         };
 
-        virtual ExecutionResult execute_statement(const Statement s) = 0;
+        virtual ExecutionResult execute_statement(const Statement &s) = 0;
     };
 }
 

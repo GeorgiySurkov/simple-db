@@ -11,6 +11,7 @@ namespace SimpleDB {
             result.type = StatementType::EXIT;
             return result;
         } else if (command == "load") {
+            result.type = StatementType::LOAD;
             m_in >> result.file_name;
             return result;
         }
