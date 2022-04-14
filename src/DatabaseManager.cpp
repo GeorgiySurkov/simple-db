@@ -1,4 +1,5 @@
 #include "DatabaseManager.h"
+#include "lib/DBException.h"
 
 namespace SimpleDB {
 
@@ -7,12 +8,18 @@ namespace SimpleDB {
         string command;
         while (true) {
             print_prompt();
-            Statement s = m_statement_reader.read_statement();
-            switch (m_statement_executor.execute_statement(s)) {
-                case AbstractStatementExecutor::ExecutionResult::SUCCESS:
-                    break;
-                case AbstractStatementExecutor::ExecutionResult::SUCCESS_EXIT:
-                    return 0;
+            try {
+                Statement s = m_statement_reader.read_statement();
+                switch (m_statement_executor.execute_statement(s)) {
+                    case AbstractStatementExecutor::ExecutionResult::SUCCESS:
+                        break;
+                    case AbstractStatementExecutor::ExecutionResult::SUCCESS_EXIT:
+                        return 0;
+                }
+            } catch (DBException &e) {
+                std::cout << "Error: " << e.get_error_text() << std::endl;
+            } catch (...) {
+                std::cout << "Unknown Error" << std::endl;
             }
         }
     }

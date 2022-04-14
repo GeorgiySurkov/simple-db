@@ -49,14 +49,6 @@ namespace SimpleDB {
         return *this;
     }
 
-    string string::operator+(const string &right) const {
-        size_t len1 = length(), len2 = right.length();
-        string result(len1 + len2 + 1);
-        memcpy(result.m_data, m_data, len1);
-        memcpy(result.m_data + len1, right.m_data, len2 + 1);
-        return result;
-    }
-
     string &string::operator+=(const string &right) {
         size_t len1 = length(), len2 = right.length();
         char *tmp = new char[len1 + len2 + 1];

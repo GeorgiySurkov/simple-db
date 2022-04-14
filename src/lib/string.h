@@ -24,8 +24,12 @@ namespace SimpleDB {
 
         [[nodiscard]] const char* str() const { return m_data; }
 
-        string operator+(const string&) const;
         string& operator+=(const string&);
+
+        friend string operator+(string a, const string &b) {
+            a += b;
+            return a;
+        }
 
         [[nodiscard]] size_t length() const { return strlen(m_data); };
 

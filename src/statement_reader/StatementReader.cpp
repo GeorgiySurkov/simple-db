@@ -1,5 +1,7 @@
 #include "StatementReader.h"
 
+#include "StatementReadingError.h"
+
 namespace SimpleDB {
     Statement StatementReader::read_statement() {
         string command;
@@ -8,7 +10,10 @@ namespace SimpleDB {
         if (command == "exit") {
             result.type = StatementType::EXIT;
             return result;
+        } else if (command == "load") {
+            m_in >> result.file_name;
+            return result;
         }
-
+        throw StatementReadingError("Unknown command '" + command + "'");
     }
 }
