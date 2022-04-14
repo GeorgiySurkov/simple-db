@@ -17,7 +17,7 @@ namespace SimpleDB {
                         return 0;
                 }
             } catch (DBException &e) {
-                std::cout << "Error: " << e.get_error_text() << std::endl;
+                std::cout << e.get_error_text() << std::endl;
             } catch (...) {
                 std::cout << "Unknown Error" << std::endl;
             }

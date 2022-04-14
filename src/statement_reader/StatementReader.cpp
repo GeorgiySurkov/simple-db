@@ -15,6 +15,6 @@ namespace SimpleDB {
             m_in >> result.file_name;
             return result;
         }
-        throw StatementReadingError("Unknown command '" + command + "'");
+        throw StatementReadingError("Unknown command: " + command);
     }
 }
