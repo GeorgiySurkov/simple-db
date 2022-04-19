@@ -1,10 +1,10 @@
 #pragma once
 
-#include "StatementReadingError.h"
+#include "./StatementReadingError.h"
 
 namespace SimpleDB {
 
-    class UnknownCommandError : public StatementReadingError {
+    class WrongStatementFormatError : public StatementReadingError {
     public:
         using StatementReadingError::StatementReadingError;
     };

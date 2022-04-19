@@ -1,24 +1,41 @@
 #include "StatementReader.h"
 
 #include "UnknownCommandError.h"
+#include "WrongStatementFormatError.h"
 #include "helpers.h"
 
 namespace SimpleDB {
 
     Statement StatementReader::read_statement() {
-        string command;
-        m_in >> command;
         Statement result;
-        if (command == "exit") {
-            read_exit_statement_params(result);
-        } else if (command == "load") {
-            read_load_statement_params(result);
-        } else if (command == "save") {
-            read_save_statement_params(result);
-        } else if (command == "add") {
-            read_add_statement_params(result);
-        } else {
-            throw UnknownCommandError(command);
+        try {
+            string command;
+            m_in >> command;
+            if (command == "exit") {
+                read_exit_statement_params(result);
+            } else if (command == "load") {
+                read_load_statement_params(result);
+            } else if (command == "save") {
+                read_save_statement_params(result);
+            } else if (command == "add") {
+                read_add_statement_params(result);
+            } else if (command == "del") {
+                read_del_statement_params(result);
+            } else if (command == "print") {
+                read_print_statement_params(result);
+            } else if (command == "export") {
+                read_export_statement_params(result);
+            } else if (command == "find") {
+                read_find_statement_params(result);
+            } else {
+                throw UnknownCommandError("Unknown command: " + command);
+            }
+        } catch (const std::ios_base::failure &e) {
+            skip_bad_input();
+            throw WrongStatementFormatError("Wrong Statement format error"); // TODO: add more meaningful information
+        } catch (const StatementReadingError &e) {
+            skip_bad_input();
+            throw;
         }
         return result;
     }
@@ -60,5 +77,42 @@ namespace SimpleDB {
 
         // reading price
         m_in >> result.row_to_insert.price;
+    }
+
+    void StatementReader::read_del_statement_params(Statement &result) {
+        result.type = StatementType::DEL;
+        m_in >> result.id;
+    }
+
+    void StatementReader::read_print_statement_params(Statement &result) {
+        result.type = StatementType::PRINT;
+
+        // Dirty hack to read possible argument of print command
+        // Possible solution: require user to enter terminating char at the end of each statement (for e.g. semicolon)
+        // TODO: remove hack
+
+        string buff;
+        getline(m_in, buff, '\n');
+        buff = trim(buff);
+        try {
+            result.rooms_amount = std::stoi(buff.str());
+        } catch (...) {
+            result.rooms_amount = -1;
+        }
+    }
+
+    void StatementReader::read_export_statement_params(Statement &result) {
+        result.type = StatementType::EXPORT;
+        m_in >> result.file_name;
+    }
+
+    void StatementReader::read_find_statement_params(Statement &result) {
+        result.type = StatementType::FIND;
+        m_in >> result.id;
+    }
+
+    void StatementReader::skip_bad_input() {
+        m_in.clear();
+        m_in.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
 }

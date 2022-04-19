@@ -1,9 +1,12 @@
 #pragma once
 
-#include "../DBException.h"
+#include "StatementReadingError.h"
 
 namespace SimpleDB {
-    class WrongDateFormatError : public DBException {
-        using DBException::DBException;
+
+    class WrongDateFormatError : public StatementReadingError {
+    public:
+        using StatementReadingError::StatementReadingError;
     };
+
 }

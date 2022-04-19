@@ -21,6 +21,18 @@ namespace SimpleDB {
                 m_out << "Address: '" << s.row_to_insert.address << "'" << std::endl;
                 m_out << "Price: '" << s.row_to_insert.price << std::endl;
                 return ExecutionResult::SUCCESS;
+            case StatementType::DEL:
+                m_out << "removed row with id " << s.id << std::endl;
+                return ExecutionResult::SUCCESS;
+            case StatementType::PRINT:
+                m_out << "printed rows with rooms_amount " << s.rooms_amount << std::endl;
+                return ExecutionResult::SUCCESS;
+            case StatementType::EXPORT:
+                m_out << "exported to file '" << s.file_name << "'" << std::endl;
+                return ExecutionResult::SUCCESS;
+            case StatementType::FIND:
+                m_out << "found room for swap for room with id " << s.id << std::endl;
+                return ExecutionResult::SUCCESS;
         }
     }
 

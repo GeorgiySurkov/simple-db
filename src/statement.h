@@ -8,10 +8,10 @@ namespace SimpleDB {
         LOAD,
         SAVE,
         ADD,
-//        DEL,
-//        PRINT,
-//        EXPORT,
-//        FIND,
+        DEL,
+        PRINT,
+        EXPORT,
+        FIND,
         EXIT,
     };
 
@@ -40,6 +40,6 @@ namespace SimpleDB {
         ID id;
 
         // used by StatementType::PRINT
-        long long amount;
+        int rooms_amount;
     };
 }
