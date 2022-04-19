@@ -1,9 +1,7 @@
 //-----------------------------------
 // This file contains structs and functions for operation with dates
 //-----------------------------------
-
-#ifndef ROOM_FOR_SALE_DATE_H
-#define ROOM_FOR_SALE_DATE_H
+#pragma once
 
 enum ParseDateResultType {
     PARSE_DATE_SUCCESS,
@@ -29,5 +27,3 @@ struct Date {
 };
 
 ParseDateResult *parse_date(const char *str, Date *date);
-
-#endif //ROOM_FOR_SALE_DATE_H

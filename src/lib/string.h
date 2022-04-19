@@ -1,5 +1,4 @@
-#ifndef ROOM_FOR_SALE_STRING_H
-#define ROOM_FOR_SALE_STRING_H
+#pragma once
 
 #include <iostream>
 #include "Iterator.h"
@@ -99,5 +98,3 @@ namespace SimpleDB {
 
     };
 }
-
-#endif //ROOM_FOR_SALE_STRING_H

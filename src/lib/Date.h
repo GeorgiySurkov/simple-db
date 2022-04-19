@@ -1,6 +1,4 @@
-#ifndef ROOM_FOR_SALE_DATE_H
-#define ROOM_FOR_SALE_DATE_H
-
+#pragma once
 #include "./string.h"
 
 namespace SimpleDB {
@@ -83,5 +81,3 @@ namespace SimpleDB {
         }
     };
 }
-
-#endif //ROOM_FOR_SALE_DATE_H

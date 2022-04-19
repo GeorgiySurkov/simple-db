@@ -1,5 +1,4 @@
-#ifndef ROOM_FOR_SALE_STATEMENTEXECUTOR_H
-#define ROOM_FOR_SALE_STATEMENTEXECUTOR_H
+#pragma once
 
 #include "../AbstractStatementExecutor.h"
 
@@ -10,6 +9,3 @@ namespace SimpleDB {
         ExecutionResult execute_statement(const Statement &s) final;
     };
 }
-
-
-#endif //ROOM_FOR_SALE_STATEMENTEXECUTOR_H

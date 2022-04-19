@@ -1,5 +1,4 @@
-#ifndef ROOM_FOR_SALE_STATEMENT_H
-#define ROOM_FOR_SALE_STATEMENT_H
+#pragma once
 
 #include "lib/string.h"
 #include "lib/Date.h"
@@ -44,5 +43,3 @@ namespace SimpleDB {
         long long amount;
     };
 }
-
-#endif //ROOM_FOR_SALE_STATEMENT_H

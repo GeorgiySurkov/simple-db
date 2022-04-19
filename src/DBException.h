@@ -1,5 +1,4 @@
-#ifndef ROOM_FOR_SALE_DBEXCEPTION_H
-#define ROOM_FOR_SALE_DBEXCEPTION_H
+#pragma once
 
 #include "lib/string.h"
 
@@ -13,6 +12,3 @@ namespace SimpleDB {
         [[nodiscard]] virtual const string &get_error_text() const { return str; }
     };
 }
-
-
-#endif //ROOM_FOR_SALE_DBEXCEPTION_H

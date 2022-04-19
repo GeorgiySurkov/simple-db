@@ -1,5 +1,4 @@
-#ifndef ROOM_FOR_SALE_DATABASEMANAGER_H
-#define ROOM_FOR_SALE_DATABASEMANAGER_H
+#pragma once
 
 #include <iostream>
 #include "lib/string.h"
@@ -37,5 +36,3 @@ namespace SimpleDB {
     };
 
 }
-
-#endif //ROOM_FOR_SALE_DATABASEMANAGER_H

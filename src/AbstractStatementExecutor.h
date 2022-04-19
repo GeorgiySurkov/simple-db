@@ -1,5 +1,4 @@
-#ifndef ROOM_FOR_SALE_ABSTRACTSTATEMENTEXECUTOR_H
-#define ROOM_FOR_SALE_ABSTRACTSTATEMENTEXECUTOR_H
+#pragma once
 
 #include "iostream"
 #include "statement.h"
@@ -19,5 +18,3 @@ namespace SimpleDB {
         virtual ExecutionResult execute_statement(const Statement &s) = 0;
     };
 }
-
-#endif //ROOM_FOR_SALE_ABSTRACTSTATEMENTEXECUTOR_H

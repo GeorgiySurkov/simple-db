@@ -1,5 +1,4 @@
-#ifndef ROOM_FOR_SALE_ABSTRACTSTATEMENTREADER_H
-#define ROOM_FOR_SALE_ABSTRACTSTATEMENTREADER_H
+#pragma once
 
 #include "iostream"
 #include "statement.h"
@@ -14,5 +13,3 @@ namespace SimpleDB {
         virtual Statement read_statement() = 0;
     };
 }
-
-#endif //ROOM_FOR_SALE_ABSTRACTSTATEMENTREADER_H

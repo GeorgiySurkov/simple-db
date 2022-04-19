@@ -1,5 +1,4 @@
-#ifndef ROOM_FOR_SALE_STATEMENTREADER_H
-#define ROOM_FOR_SALE_STATEMENTREADER_H
+#pragma once
 
 #include <iostream>
 #include "../statement.h"
@@ -20,5 +19,3 @@ namespace SimpleDB {
         void read_add_statement_params(Statement &result);
     };
 }
-
-#endif //ROOM_FOR_SALE_STATEMENTREADER_H
