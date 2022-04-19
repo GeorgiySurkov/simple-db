@@ -10,7 +10,7 @@ namespace SimpleDB {
     public:
         explicit DBException(string s) : str(std::move(s)) {}
 
-        [[nodiscard]] const string &get_error_text() const { return str; }
+        [[nodiscard]] virtual const string &get_error_text() const { return str; }
     };
 }
 
