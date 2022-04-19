@@ -2,16 +2,35 @@
 #define ROOM_FOR_SALE_STRING_H
 
 #include <iostream>
+#include "Iterator.h"
 
 namespace SimpleDB {
+
     class string {
-        char* m_data;
+        char *m_data;
         size_t m_capacity;
+
     public:
-        string(const char* source = "");
+
+        //typedefs
+        using iterator = Iterator<char>;
+        using const_iterator = Iterator<const char>;
+
+        string(const char *source = "");
+
         explicit string(size_t);
-        string(const string&);
-        string(string&&) noexcept;
+
+        template<typename It>
+        string(It begin, It end) : string() {
+            while (begin != end) {
+                push_back(*begin);
+                ++begin;
+            }
+        };
+
+        string(const string &);
+
+        string(string &&) noexcept;
 
         ~string() {
             delete[] m_data;
@@ -19,12 +38,13 @@ namespace SimpleDB {
             m_data = nullptr;
         }
 
-        string& operator=(const string&);
-        string& operator=(string&&) noexcept;
+        string &operator=(const string &);
 
-        [[nodiscard]] const char* str() const { return m_data; }
+        string &operator=(string &&) noexcept;
 
-        string& operator+=(const string&);
+        [[nodiscard]] const char *str() const { return m_data; }
+
+        string &operator+=(const string &);
 
         friend string operator+(string a, const string &b) {
             a += b;
@@ -35,20 +55,31 @@ namespace SimpleDB {
 
         void push_back(char c);
 
-        char operator[](int i) {
+        void pop_back();
+
+        char operator[](size_t i) const {
             if (i < 0 || i > m_capacity) {
                 throw "Out of string limits";
             };
             return m_data[i];
         }
 
-        bool operator== (const string& X) const {
+        char &operator[](size_t i) {
+            if (i < 0 || i > m_capacity) {
+                throw "Out of string limits";
+            };
+            return m_data[i];
+        }
+
+        bool operator==(const string &X) const {
             return strcmp(m_data, X.m_data) == 0;
         }
-        bool operator!= (const string& X) const {
+
+        bool operator!=(const string &X) const {
             return strcmp(m_data, X.m_data) != 0;
         }
-        bool operator< (const string& X) const {
+
+        bool operator<(const string &X) const {
             return strcmp(m_data, X.m_data) < 0;
         }
 
@@ -56,7 +87,16 @@ namespace SimpleDB {
 
         friend std::istream &operator>>(std::istream &in, string &s);
 
-        friend std::istream& getline(std::istream& in, string& str, char delim);
+        friend std::istream &getline(std::istream &in, string &str, char delim);
+
+        iterator begin() { return iterator(m_data); }
+
+        iterator end() { return iterator(m_data + strlen(m_data)); } // TODO: store string length to remove useless computations
+
+        [[nodiscard]] const_iterator cbegin() const { return const_iterator(m_data); }
+
+        [[nodiscard]] const_iterator cend() const { return const_iterator(m_data + strlen(m_data)); } // TODO: store string length to remove useless computations
+
     };
 }
 

@@ -1,8 +1,8 @@
 #include "./string.h"
 #include <iostream>
 
-
 namespace SimpleDB {
+
     string::string(const char *source) {
         m_capacity = strlen(source) + 1;
         m_data = new char[m_capacity];
@@ -62,11 +62,13 @@ namespace SimpleDB {
 
     void string::push_back(char c) {
         size_t len = length();
-        if (len + 1 > m_capacity) {
-            char *buff = new char[m_capacity * 2 + 1];
+        if (len + 2 > m_capacity) {
+            size_t new_capacity = m_capacity * 2 + 1;
+            char *buff = new char[new_capacity]; // TODO: check if pointer is not null;
             strcpy(buff, m_data);
             delete[] m_data;
             m_data = buff;
+            m_capacity = new_capacity;
         }
         m_data[len] = c;
         m_data[len + 1] = '\0';
@@ -107,5 +109,14 @@ namespace SimpleDB {
         str.m_capacity = buff_size;
         return in;
     }
+
+    void string::pop_back() {
+        // TODO: remove expensive operation of getting string len
+        size_t len = strlen(m_data);
+        if (len > 0) {
+            m_data[len - 1] = 0;
+        }
+    }
+
 }
 
