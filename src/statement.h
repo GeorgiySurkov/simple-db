@@ -8,7 +8,7 @@ namespace SimpleDB {
     enum class StatementType {
         LOAD,
         SAVE,
-//        ADD,
+        ADD,
 //        DEL,
 //        PRINT,
 //        EXPORT,
@@ -24,7 +24,7 @@ namespace SimpleDB {
         int rooms_amount;
         int floor;
         int area;
-        char * address;
+        string address;
         int price;
     };
 
