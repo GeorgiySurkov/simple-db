@@ -43,19 +43,4 @@ namespace SimpleDB {
         return {dmy[0], dmy[1], dmy[2]};
     }
 
-    string trim(const string &s) {
-        auto start = s.cbegin();
-        while (start != s.cend() && std::isspace(*start)) {
-            ++start;
-        }
-
-        auto end = s.cend();
-
-        do {
-            --end;
-        } while (start != end && std::isspace(*end));
-
-        return {start, ++end};
-    }
-
 }

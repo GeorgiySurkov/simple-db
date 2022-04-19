@@ -118,5 +118,23 @@ namespace SimpleDB {
         }
     }
 
+    string &ltrim_in_place(string &s) {
+        auto curr = s.begin();
+        while (std::isspace(*curr) && curr != s.end() ) {
+            ++curr;
+        }
+        s = string(curr, s.end());
+        return s;
+    }
+
+    string &rtrim_in_place(string &s) {
+        auto curr = s.end();
+        do {
+            --curr;
+        } while (std::isspace(*curr) && curr != s.begin());
+        s = string(s.begin(), ++s.end());
+        return s;
+    }
+
 }
 

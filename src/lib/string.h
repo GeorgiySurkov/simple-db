@@ -96,5 +96,16 @@ namespace SimpleDB {
 
         [[nodiscard]] const_iterator cend() const { return const_iterator(m_data + strlen(m_data)); } // TODO: store string length to remove useless computations
 
+        friend string &ltrim_in_place(string &s);
+
+        friend string &rtrim_in_place(string &s);
+
+        friend string &trim_in_place(string &s) { return ltrim_in_place(rtrim_in_place(s)); }
+
+        friend string ltrim(string s) { return ltrim_in_place(s); }
+
+        friend string rtrim(string s) { return rtrim_in_place(s); }
+
+        friend string trim(string s) { return trim_in_place(s); }
     };
 }
