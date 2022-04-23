@@ -43,10 +43,22 @@ namespace SimpleDB {
 
         Iterator(const Iterator &o) : m_itr(o.m_itr->clone()) {}
 
+        Iterator(Iterator &&o) noexcept {
+            m_itr = o.m_itr;
+            o.m_itr = nullptr;
+        }
+
         Iterator &operator=(const Iterator &o) {
             if (this == &o) return *this;
             delete m_itr;
             m_itr = o.m_itr->clone();
+            return *this;
+        }
+
+        Iterator &operator=(Iterator &&o) noexcept {
+            if (this == &o) return *this;
+            m_itr = o.m_itr;
+            o.m_itr = nullptr;
             return *this;
         }
 
