@@ -10,6 +10,8 @@ namespace SimpleDB {
     public:
         explicit AbstractStatementExecutor(std::ostream &out) : m_out(out) {}
 
+        virtual ~AbstractStatementExecutor() = default;
+
         enum class ExecutionResult {
             SUCCESS,
             SUCCESS_EXIT,
