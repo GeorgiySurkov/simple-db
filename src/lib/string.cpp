@@ -50,7 +50,7 @@ namespace SimpleDB {
     }
 
     string &string::operator+=(const string &right) {
-        size_t len1 = length(), len2 = right.length();
+        size_t len1 = size(), len2 = right.size();
         char *tmp = new char[len1 + len2 + 1];
         memcpy(tmp, m_data, len1);
         memcpy(tmp + len1, right.m_data, len2 + 1);
@@ -61,7 +61,7 @@ namespace SimpleDB {
     }
 
     void string::push_back(char c) {
-        size_t len = length();
+        size_t len = size();
         if (len + 2 > m_capacity) {
             size_t new_capacity = m_capacity * 2 + 1;
             char *buff = new char[new_capacity]; // TODO: check if pointer is not null;
@@ -76,7 +76,7 @@ namespace SimpleDB {
 
     string operator+(const char *str, const string &B) {
         string A(str);
-        size_t len1 = A.length(), len2 = B.length();
+        size_t len1 = A.size(), len2 = B.size();
         char *tmp = new char[len1 + len2 + 1];
         memcpy(tmp, A.str(), len1);
         memcpy(tmp + len1, B.str(), len2 + 1);

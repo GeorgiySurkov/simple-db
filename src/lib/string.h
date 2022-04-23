@@ -50,7 +50,7 @@ namespace SimpleDB {
             return a;
         }
 
-        [[nodiscard]] size_t length() const { return strlen(m_data); };
+        [[nodiscard]] size_t size() const { return strlen(m_data); };
 
         void push_back(char c);
 
@@ -91,7 +91,7 @@ namespace SimpleDB {
         iterator begin() { return iterator(new iterator_implementation(m_data)); }
 
         iterator end() {
-            return iterator(new iterator_implementation(m_data + strlen(m_data)));
+            return iterator(new iterator_implementation(m_data + size()));
         } // TODO: store string length to remove useless computations
 
         friend string &ltrim_in_place(string &s);
