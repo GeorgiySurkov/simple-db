@@ -13,7 +13,7 @@ namespace SimpleDB {
 
         //typedefs
         using iterator = Iterator<char>;
-        using const_iterator = Iterator<const char>;
+        using iterator_implementation = LinearIterator<char>;
 
         string(const char *source = "");
 
@@ -88,13 +88,11 @@ namespace SimpleDB {
 
         friend std::istream &getline(std::istream &in, string &str, char delim);
 
-        iterator begin() { return iterator(m_data); }
+        iterator begin() { return iterator(new iterator_implementation(m_data)); }
 
-        iterator end() { return iterator(m_data + strlen(m_data)); } // TODO: store string length to remove useless computations
-
-        [[nodiscard]] const_iterator cbegin() const { return const_iterator(m_data); }
-
-        [[nodiscard]] const_iterator cend() const { return const_iterator(m_data + strlen(m_data)); } // TODO: store string length to remove useless computations
+        iterator end() {
+            return iterator(new iterator_implementation(m_data + strlen(m_data)));
+        } // TODO: store string length to remove useless computations
 
         friend string &ltrim_in_place(string &s);
 

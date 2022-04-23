@@ -1,73 +1,106 @@
 #pragma once
 
+#include <typeinfo>
+
 namespace SimpleDB {
+
+    template<typename T>
+    class AbstractIterator {
+    public:
+        AbstractIterator() {}
+
+        virtual ~AbstractIterator() {}
+
+        virtual void operator++() = 0;
+
+        virtual void operator--() = 0;
+
+        virtual const T &operator*() const = 0;
+
+        virtual AbstractIterator *clone() const = 0;
+
+        // The == operator is non-virtual. It checks that the
+        // derived objects have compatible types, then calls the
+        // virtual comparison function equal.
+        bool operator==(const AbstractIterator &o) const {
+            return typeid(*this) == typeid(o) && equal(o);
+        }
+
+        inline bool operator!=(const AbstractIterator &o) const {
+            return !(*this == 0);
+        }
+
+    protected:
+        virtual bool equal(const AbstractIterator &o) const = 0;
+    };
 
     template<typename T>
     class Iterator {
     public:
+        explicit Iterator(AbstractIterator<T> *it = nullptr) : m_itr(it) {}
 
-        using value_type = T;
-        using pointer = T *;
-        using reference = T &;
+        ~Iterator() { delete m_itr; }
 
-    public:
+        Iterator(const Iterator &o) : m_itr(o.m_itr->clone()) {}
 
-        explicit Iterator(T *ptr = nullptr) { m_ptr = ptr; }
-
-        Iterator(const Iterator<T> &it) = default;
-
-        ~Iterator() = default;
-
-        virtual Iterator<T> &operator=(const Iterator<T> &it) = default;
-
-        virtual Iterator<T> &operator=(T *ptr) {
-            m_ptr = ptr;
-            return (*this);
+        Iterator &operator=(const Iterator &o) {
+            if (this == &o) return *this;
+            delete m_itr;
+            m_itr = o.m_itr->clone();
+            return *this;
         }
 
-        explicit operator bool() const {
-            if (m_ptr)
-                return true;
-            else
-                return false;
+        Iterator &operator++() {
+            ++(*m_itr);
+            return *this;
         }
 
-        bool operator==(const Iterator<T> &it) const { return (m_ptr == it.getConstPtr()); }
-
-        bool operator!=(const Iterator<T> &it) const { return (m_ptr != it.getConstPtr()); }
-
-        virtual Iterator<T> &operator++() {
-            ++m_ptr;
-            return (*this);
+        Iterator &operator--() {
+            --(*m_itr);
+            return *this;
         }
 
-        virtual Iterator<T> &operator--() {
-            --m_ptr;
-            return (*this);
+        const T &operator*() const { return *(*m_itr); }
+
+        bool operator==(const Iterator &o) const {
+            return (m_itr == o.m_itr) || (*m_itr == *o.m_itr);
         }
 
-        virtual Iterator<T> operator++(int) {
-            auto temp(*this);
-            ++m_ptr;
-            return temp;
-        }
-
-        virtual Iterator<T> operator--(int) {
-            auto temp(*this);
-            --m_ptr;
-            return temp;
-        }
-
-        T &operator*() { return *m_ptr; }
-
-        const T &operator*() const { return *m_ptr; }
-
-        T *operator->() { return m_ptr; }
-
-        const T *getConstPtr() const { return m_ptr; }
+        inline bool operator!=(const Iterator &o) const { return !(*this == o); }
 
     protected:
+        AbstractIterator<T> *m_itr;
+    };
 
+    template<typename T>
+    class LinearIterator final : public AbstractIterator<T> {
         T *m_ptr;
+
+    public:
+        explicit LinearIterator(T *ptr = nullptr) : AbstractIterator<T>(), m_ptr(ptr) {}
+
+        ~LinearIterator() = default;
+
+        void operator++() {
+            ++m_ptr;
+        }
+
+        void operator--() {
+            --m_ptr;
+        }
+
+        const T &operator*() const {
+            return *m_ptr;
+        }
+
+        AbstractIterator<T> *clone() const {
+            return new LinearIterator<T>(*this);
+        }
+
+    protected:
+        bool equal(const AbstractIterator<T> &o) const {
+            const auto &other = static_cast<const LinearIterator<T> &>(o);
+            return m_ptr == other.m_ptr;
+        }
     };
 }
