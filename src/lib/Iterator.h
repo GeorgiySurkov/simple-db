@@ -1,7 +1,5 @@
 #pragma once
 
-#include <typeinfo>
-
 namespace SimpleDB {
 
     template<typename T>
@@ -19,11 +17,9 @@ namespace SimpleDB {
 
         virtual AbstractIterator *clone() const = 0;
 
-        // The == operator is non-virtual. It checks that the
-        // derived objects have compatible types, then calls the
-        // virtual comparison function equal.
         bool operator==(const AbstractIterator &o) const {
-            return typeid(*this) == typeid(o) && equal(o);
+//            std::cout << typeid(*this).name() << " " << typeid(o).name() << std::endl;
+            return this->type() == o.type() && equal(o);
         }
 
         inline bool operator!=(const AbstractIterator &o) const {
@@ -32,6 +28,15 @@ namespace SimpleDB {
 
     protected:
         virtual bool equal(const AbstractIterator &o) const = 0;
+
+        // TODO: remove dirty hack with IteratorType
+        enum class IteratorType {
+            ABSTRACT,
+            LINEAR,
+            FILTER,
+        };
+
+        virtual IteratorType type() const { return IteratorType::ABSTRACT; }
     };
 
     template<typename T>
@@ -74,6 +79,8 @@ namespace SimpleDB {
 
         const T &operator*() const { return *(*m_itr); }
 
+        const T *operator->() const { return &(*(*m_itr)); }
+
         bool operator==(const Iterator &o) const {
             return (m_itr == o.m_itr) || (*m_itr == *o.m_itr);
         }
@@ -111,8 +118,10 @@ namespace SimpleDB {
 
     protected:
         bool equal(const AbstractIterator<T> &o) const {
-            const auto &other = static_cast<const LinearIterator<T> &>(o);
+            const auto &other = static_cast<const LinearIterator &>(o);
             return m_ptr == other.m_ptr;
         }
+
+        typename AbstractIterator<T>::IteratorType type() const { return AbstractIterator<T>::IteratorType::LINEAR; }
     };
 }
