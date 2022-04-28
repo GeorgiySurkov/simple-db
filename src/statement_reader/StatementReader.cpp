@@ -73,7 +73,11 @@ namespace SimpleDB {
 
         // reading address
         getline(m_in, buff, ',');
-        result.row_to_insert.address = trim(buff);
+        trim_in_place(buff);
+        if (buff.size() > 64) {
+            throw WrongStatementFormatError("Address can't be longer than 64 chars: " + buff);
+        }
+        strncpy(result.row_to_insert.address, buff.str(), 65);
 
         // reading price
         m_in >> result.row_to_insert.price;

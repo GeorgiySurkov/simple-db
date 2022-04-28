@@ -23,7 +23,7 @@ namespace SimpleDB {
         int rooms_amount;
         int floor;
         int area;
-        string address;
+        char address[65];
         int price;
     };
 
