@@ -106,8 +106,6 @@ namespace SimpleDB {
         };
     }
 
-    void DataContainer::export_to_text(const string &file_path) {}
-
     AbstractDataContainer::Range DataContainer::find_apartment_for_exchange(ID key) {
         return {
                 create_iterator(m_container),

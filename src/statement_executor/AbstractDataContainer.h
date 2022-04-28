@@ -24,8 +24,6 @@ namespace SimpleDB {
 
         virtual Range get_apartments_with_n_rooms(int n) = 0;
 
-        virtual void export_to_text(const string &file_path) = 0;
-
         virtual Range find_apartment_for_exchange(ID key) = 0;
 
         virtual ~AbstractDataContainer() = default;

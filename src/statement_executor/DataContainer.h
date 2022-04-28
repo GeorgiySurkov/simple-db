@@ -31,8 +31,6 @@ namespace SimpleDB {
 
         Range get_apartments_with_n_rooms(int n);
 
-        void export_to_text(const string &file_path);
-
         Range find_apartment_for_exchange(ID key);
 
     private:
