@@ -8,8 +8,8 @@ namespace SimpleDB {
     class AbstractDataContainer {
     public:
         struct Range {
-            Iterator<const Row &> begin;
-            Iterator<const Row &> end;
+            Iterator<Row> begin;
+            Iterator<Row> end;
         };
 
         virtual void load_data(const string &file_path) = 0;
