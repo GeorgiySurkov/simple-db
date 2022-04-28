@@ -1,5 +1,5 @@
 #pragma once
-
+/*
 #include "Iterator.h"
 
 namespace SimpleDB {
@@ -92,7 +92,7 @@ namespace SimpleDB {
 
         protected:
             bool equal(const AbstractIterator<T> &o) const {
-                const auto &other = static_cast<const LinearIterator<T> &>(o);
+                const auto &other = static_cast<const iterator &>(o);
                 return m_curr_node == other.m_curr_node;
             }
         };
@@ -102,11 +102,15 @@ namespace SimpleDB {
     public:
         RedBlackTree() = default;
 
-        void insert(T value);
+        Iterator<T> insert(const T &value);
 
-        void remove(T value);
+        size_t erase(const T &value);
 
-        Iterator<T> find(T value);
+        Iterator<T> erase(Iterator<T> pos);
+
+        size_t size() const;
+
+        Iterator<T> find(const T &value);
 
         Iterator<T> begin() const { return Iterator<T>(new iterator(root->min())); }
 
@@ -117,7 +121,7 @@ namespace SimpleDB {
     private:
         void balance_insertion(Node *node);
 
-        void balance_removing(Node *node);
+        void balance_removal(Node *node);
 
         Node *get_uncle(Node *node);
 
@@ -131,3 +135,4 @@ namespace SimpleDB {
     };
 
 }
+*/

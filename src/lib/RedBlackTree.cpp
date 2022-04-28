@@ -1,31 +1,33 @@
+/*
 #include "RedBlackTree.h"
 
 namespace SimpleDB {
 
     template<typename T>
-    void RedBlackTree<T>::insert(T value) {
+    Iterator<T> RedBlackTree<T>::insert(const T &value) {
         if (!root) {
             root = new Node(false, value);
             root->left = new Node(root);
             root->right = new Node(root);
-            return;
+            return Iterator<T>(new iterator(root));
         }
         Node *node = root;
-        auto *newNode = new Node(true, value);
-        newNode->left = new Node(newNode);
-        newNode->right = new Node(newNode);
+        auto *new_node = new Node(true, value);
+        new_node->left = new Node(new_node);
+        new_node->right = new Node(new_node);
         while (node->left != nullptr && node->right != nullptr) {
-            if (node->value > value)
+            if (value < node->value)
                 node = node->left;
             else
                 node = node->right;
         }
-        newNode->parent = node->parent;
+        new_node->parent = node->parent;
         if (node == node->parent->right)
-            node->parent->right = newNode;
+            node->parent->right = new_node;
         else
-            node->parent->left = newNode;
-        balance_insertion(newNode);
+            node->parent->left = new_node;
+        balance_insertion(new_node);
+        return Iterator<T>(new iterator(new_node));
     }
 
     template<typename T>
@@ -132,7 +134,7 @@ namespace SimpleDB {
     }
 
     template<typename T>
-    void RedBlackTree<T>::remove(T value) {
+    size_t RedBlackTree<T>::erase(const T &value) {
         Node *node = root;
         Node *balanceNode;
         while (node->value != value) {
@@ -182,12 +184,12 @@ namespace SimpleDB {
             nextNode->is_red = node->is_red;
         }
         if (!nodeOriginalIsRed) {
-            balance_removing(balanceNode);
+            balance_removal(balanceNode);
         }
     }
 
     template<typename T>
-    void RedBlackTree<T>::balance_removing(Node *node) {
+    void RedBlackTree<T>::balance_removal(Node *node) {
         while (node->is_red == false && node != root) {
             if (node == node->parent->left) {
                 Node *brother = node->parent->right;
@@ -243,7 +245,7 @@ namespace SimpleDB {
     }
 
     template<typename T>
-    Iterator<T> RedBlackTree<T>::find(T value) {
+    Iterator<T> RedBlackTree<T>::find(const T &value) {
         // TODO: implement find
         return Iterator<T>();
     }
@@ -272,3 +274,4 @@ namespace SimpleDB {
 //        print(node->right, blackHeight + blackHeightAddition);
 //    }
 }
+ */
