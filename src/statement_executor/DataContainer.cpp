@@ -13,9 +13,7 @@
 namespace SimpleDB {
 
     void DataContainer::load_data(const string &file_path) {
-        if (!empty()) {
-            throw StatementExecutingError("Can't load new data from file when there are unsaved data");
-        }
+        clear();
         std::ifstream f(file_path.str(), std::ios::binary);
         if (f.fail()) {
             throw FileSystemError("Error while opening file '" + file_path + "'");
@@ -65,7 +63,6 @@ namespace SimpleDB {
                 throw FileSystemError("Error while writing to file");
             }
         }
-        clear();
     }
 
     const Row &DataContainer::insert_row(const Row &row) {
@@ -76,6 +73,9 @@ namespace SimpleDB {
     }
 
     void DataContainer::delete_row(ID key) {
+        if (empty()) {
+            throw StatementExecutingError("Can't delete row without any data");
+        }
         auto index = find_by_id(key);
         if (index == -1) {
             char err[256];
@@ -107,9 +107,26 @@ namespace SimpleDB {
     }
 
     AbstractDataContainer::Range DataContainer::find_apartment_for_exchange(ID key) {
+        auto index = find_by_id(key);
+        if (index == -1) {
+            char err[256];
+            snprintf(err, 256, "Row with ID %lld doesn't exist", key);
+            throw StatementExecutingError(err);
+        }
+        const Row &row_for_exchange = m_container[index];
+        auto filter = [&row_for_exchange](const Row &row) {
+            return row.rooms_amount == row_for_exchange.rooms_amount &&
+                   row.floor == row_for_exchange.floor &&
+                   row_for_exchange.price * 8 / 10 <= row.price &&
+                   row.price <= row_for_exchange.price * 12 / 10;
+        };
+        auto first_it = begin();
+        while (first_it != end() && !filter(*first_it)) {
+            ++first_it;
+        }
         return {
-                create_iterator(m_container),
-                create_iterator(m_container + m_len)
+                create_filter_iterator(first_it, filter),
+                create_filter_iterator(end(), filter)
         };
     }
 
@@ -155,7 +172,7 @@ namespace SimpleDB {
         m_last_id = 0;
     }
 
-    bool DataContainer::empty() {
+    bool DataContainer::empty() const {
         return m_len == 0;
     }
 

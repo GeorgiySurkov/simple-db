@@ -31,7 +31,7 @@ namespace SimpleDB {
         StatementType type;
 
         // used by StatementType::LOAD, StatementType::SAVE, StatementType::EXPORT
-        string file_name;
+        string file_path;
 
         // used by StatementType::ADD
         Row row_to_insert;

@@ -42,12 +42,12 @@ namespace SimpleDB {
 
     void StatementReader::read_load_statement_params(Statement &result) {
         result.type = StatementType::LOAD;
-        m_in >> result.file_name;
+        m_in >> result.file_path;
     }
 
     void StatementReader::read_save_statement_params(Statement &result) {
         result.type = StatementType::SAVE;
-        m_in >> result.file_name;
+        m_in >> result.file_path;
     }
 
     void StatementReader::read_add_statement_params(Statement &result) {
@@ -107,7 +107,7 @@ namespace SimpleDB {
 
     void StatementReader::read_export_statement_params(Statement &result) {
         result.type = StatementType::EXPORT;
-        m_in >> result.file_name;
+        m_in >> result.file_path;
     }
 
     void StatementReader::read_find_statement_params(Statement &result) {

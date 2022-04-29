@@ -13,25 +13,24 @@ namespace SimpleDB {
         size_t m_len;
         size_t m_cap;
 
-
     public:
         DataContainer() : m_cap(256), m_len(0), m_container(nullptr), m_last_id(0) { m_container = new Row[m_cap]; }
 
-        ~DataContainer() = default;
+        ~DataContainer() final = default;
 
-        void load_data(const string &file_path);
+        void load_data(const string &file_path) final;
 
-        void save_data(const string &file_path);
+        void save_data(const string &file_path) final;
 
-        const Row &insert_row(const Row &row);
+        const Row &insert_row(const Row &row) final;
 
-        void delete_row(ID key);
+        void delete_row(ID key) final;
 
-        Range get_all_apartments();
+        Range get_all_apartments() final;
 
-        Range get_apartments_with_n_rooms(int n);
+        Range get_apartments_with_n_rooms(int n) final;
 
-        Range find_apartment_for_exchange(ID key);
+        Range find_apartment_for_exchange(ID key) final;
 
     private:
         void reserve(size_t new_cap);
@@ -42,7 +41,7 @@ namespace SimpleDB {
 
         void clear();
 
-        bool empty();
+        bool empty() const;
 
         size_t find_by_id(ID id);
 

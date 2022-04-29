@@ -15,8 +15,8 @@ namespace SimpleDB {
         ExecutionResult execute_statement(const Statement &s) final;
 
     private:
-        void print_row(const Row &row);
+        void print_row(std::ostream &os, const Row &row);
 
-        void print_range(const AbstractDataContainer::Range &range);
+        void print_range(std::ostream &os, const AbstractDataContainer::Range &range);
     };
 }
