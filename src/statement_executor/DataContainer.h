@@ -16,7 +16,7 @@ namespace SimpleDB {
     public:
         DataContainer() : m_cap(256), m_len(0), m_container(nullptr), m_last_id(0) { m_container = new Row[m_cap]; }
 
-        ~DataContainer() final = default;
+        ~DataContainer() final { delete[] m_container; };
 
         void load_data(const string &file_path) final;
 
