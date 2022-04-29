@@ -37,6 +37,9 @@ namespace SimpleDB {
     private:
         void reserve(size_t new_cap);
 
+        template<typename Comparator>
+        void sort(const Comparator &comp);
+
         void push_back(const Row &row);
 
         void erase(size_t index);

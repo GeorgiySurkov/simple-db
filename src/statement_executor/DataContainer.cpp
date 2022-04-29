@@ -69,6 +69,9 @@ namespace SimpleDB {
         Row copy = row;
         copy.id = ++m_last_id;
         push_back(copy);
+        sort([](const Row &lhs, const Row &rhs) {
+            return lhs.price < rhs.price;
+        });
         return m_container[m_len - 1];
     }
 
@@ -174,6 +177,68 @@ namespace SimpleDB {
 
     bool DataContainer::empty() const {
         return m_len == 0;
+    }
+
+    template<typename Comparator>
+    void _merge(
+            Row *M,
+            int first,
+            int middle,
+            int last,
+            unsigned long long &count_less,
+            unsigned long long &count_eq,
+            Comparator &comp
+    ) {
+        int size = last - first + 1;
+        Row *tmp = new Row[size];
+        int start1 = first, end1 = middle, start2 = middle + 1, end2 = last;
+        int i = 0;
+        while (start1 <= end1 && start2 <= end2) {
+            ++count_less;
+            ++count_eq;
+            if (comp(M[start1], M[start2]))
+                tmp[i++] = M[start1++];
+            else
+                tmp[i++] = M[start2++];
+        }
+        while (start1 <= end1) {
+            tmp[i++] = M[start1++];
+            ++count_eq;
+        }
+        while (start2 <= end2) {
+            tmp[i++] = M[start2++];
+            ++count_eq;
+        }
+        i = 0;
+        while (first <= last) {
+            M[first++] = tmp[i++];
+            ++count_eq;
+        }
+        delete[] tmp;
+    }
+
+    template<typename Comparator>
+    void _split(
+            Row *M,
+            int first,
+            int last,
+            unsigned long long &count_less,
+            unsigned long long &count_eq,
+            Comparator &comp
+    ) {
+        if (first < last) {
+            int middle = first + (last - first) / 2;
+            _split(M, first, middle, count_less, count_eq, comp);
+            _split(M, middle + 1, last, count_less, count_eq, comp);
+            _merge(M, first, middle, last, count_less, count_eq, comp);
+        }
+    }
+
+    template<typename Comparator>
+    void DataContainer::sort(const Comparator &comp) {
+        // Merge sort
+        unsigned long long count_less = 0, count_eq = 0;
+        _split(m_container, 0, m_len - 1, count_less, count_eq, comp);
     }
 
 }
