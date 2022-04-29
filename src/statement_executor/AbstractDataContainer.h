@@ -26,6 +26,8 @@ namespace SimpleDB {
 
         virtual Range find_apartment_for_exchange(ID key) = 0;
 
+        virtual void clear() = 0;
+
         virtual ~AbstractDataContainer() = default;
 
     };

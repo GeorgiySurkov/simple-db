@@ -27,6 +27,8 @@ namespace SimpleDB {
                 read_export_statement_params(result);
             } else if (command == "find") {
                 read_find_statement_params(result);
+            } else if (command == "clear") {
+                read_clear_statement_params(result);
             } else {
                 throw UnknownCommandError("Unknown command: " + command);
             }
@@ -118,5 +120,9 @@ namespace SimpleDB {
     void StatementReader::skip_bad_input() {
         m_in.clear();
         m_in.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
+
+    void StatementReader::read_clear_statement_params(Statement &result) {
+        result.type = StatementType::CLEAR;
     }
 }

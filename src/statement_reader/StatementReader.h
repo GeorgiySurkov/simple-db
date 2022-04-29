@@ -42,6 +42,8 @@ namespace SimpleDB {
         void read_export_statement_params(Statement &result);
 
         void read_find_statement_params(Statement &result);
+
+        void read_clear_statement_params(Statement &result);
     };
 
 }

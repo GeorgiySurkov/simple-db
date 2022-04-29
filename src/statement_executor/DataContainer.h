@@ -32,14 +32,14 @@ namespace SimpleDB {
 
         Range find_apartment_for_exchange(ID key) final;
 
+        void clear();
+
     private:
         void reserve(size_t new_cap);
 
         void push_back(const Row &row);
 
         void erase(size_t index);
-
-        void clear();
 
         bool empty() const;
 

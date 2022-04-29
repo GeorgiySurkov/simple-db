@@ -39,6 +39,9 @@ namespace SimpleDB {
             case StatementType::FIND:
                 print_range(m_out, m_dc.find_apartment_for_exchange(s.id));
                 return ExecutionResult::SUCCESS;
+            case StatementType::CLEAR:
+                m_dc.clear();
+                return ExecutionResult::SUCCESS;
         }
     }
 

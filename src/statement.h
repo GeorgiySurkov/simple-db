@@ -13,6 +13,7 @@ namespace SimpleDB {
         EXPORT,
         FIND,
         EXIT,
+        CLEAR,
     };
 
     typedef long long ID;
