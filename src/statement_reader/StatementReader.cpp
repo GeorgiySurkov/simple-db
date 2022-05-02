@@ -34,7 +34,7 @@ namespace SimpleDB {
             }
         } catch (const std::ios_base::failure &e) {
             skip_bad_input();
-            throw WrongStatementFormatError("Wrong Statement format error"); // TODO: add more meaningful information
+            throw WrongStatementFormatError("Statement format error"); // TODO: add more meaningful information
         } catch (const StatementReadingError &e) {
             skip_bad_input();
             throw;
