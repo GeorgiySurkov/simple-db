@@ -4,6 +4,25 @@
 
 namespace SimpleDB {
 
+    const char *months[12] = {
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December"
+    };
+
+    bool is_leap_year(int year) {
+        return (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
+    }
+
     Date parse_date(const string &s, char delim) {
         int dmy[3] = {0, 0, 0};
         int tmp, s_index, dmy_index;
@@ -28,16 +47,49 @@ namespace SimpleDB {
             throw WrongDateFormatError("Wrong date format: " + string(s));
         }
 
-        // TODO: check that the corresponding months have the correct number of days. For e.g. February 30
-        // Check that day, month and year are in right ranges
-        if (dmy[0] > 31) {
-            throw WrongDateFormatError("Day value is invalid"); // TODO: print invalid value
+        // Check that year, month and day are in right ranges
+        if (dmy[2] > 9999) {
+            char err[256];
+            snprintf(err, 256, "Year value is invalid: %d", dmy[2]);
+            throw WrongDateFormatError(err);
         }
         if (dmy[1] > 12) {
-            throw WrongDateFormatError("Month value is invalid"); // TODO: print invalid value
+            char err[256];
+            snprintf(err, 256, "Month value is invalid: %d", dmy[1]);
+            throw WrongDateFormatError(err);
         }
-        if (dmy[2] > 9999) {
-            throw WrongDateFormatError("Year value is invalid"); // TODO: print invalid value
+        int max_days_in_month;
+        switch (dmy[1]) {
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12:
+                max_days_in_month = 31;
+                break;
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+                max_days_in_month = 30;
+                break;
+            case 2:
+                max_days_in_month = is_leap_year(dmy[2]) ? 29 : 28;
+                break;
+        }
+        if (dmy[0] > max_days_in_month) {
+            char err[256];
+            snprintf(
+                    err,
+                    256,
+                    "Day value is invalid: %d\nThere are %d days in %s",
+                    dmy[0],
+                    max_days_in_month,
+                    months[dmy[1] - 1]
+            );
+            throw WrongDateFormatError(err);
         }
 
         return {dmy[0], dmy[1], dmy[2]};
