@@ -64,7 +64,7 @@ namespace SimpleDB {
         size_t len = size();
         if (len + 2 > m_capacity) {
             size_t new_capacity = m_capacity * 2 + 1;
-            char *buff = new char[new_capacity]; // TODO: check if pointer is not null;
+            char *buff = new char[new_capacity];
             strcpy(buff, m_data);
             delete[] m_data;
             m_data = buff;
