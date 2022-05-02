@@ -2,7 +2,6 @@
 
 #include <fstream>
 #include "AbstractDataContainer.h"
-#include "../lib/RedBlackTree.h"
 #include "../lib/FilterIterator.h"
 
 namespace SimpleDB {

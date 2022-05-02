@@ -18,7 +18,6 @@ namespace SimpleDB {
         virtual AbstractIterator *clone() const = 0;
 
         bool operator==(const AbstractIterator &o) const {
-//            std::cout << typeid(*this).name() << " " << typeid(o).name() << std::endl;
             return this->type() == o.type() && equal(o);
         }
 
