@@ -32,7 +32,7 @@ namespace SimpleDB {
             return y;
         }
 
-        friend std::string to_string(const Date &date);
+        friend string to_string(const Date &date);
 
         bool operator<(const Date &X) const { return m_julian_date < X.m_julian_date; }
 

@@ -20,10 +20,10 @@ int SimpleDB::Date::grigorian_to_julian_date(int day, int month, int year) {
            y / 4 - y / 100 + y / 400 - 32045;
 }
 
-std::string SimpleDB::to_string(const SimpleDB::Date &date) { // TODO: use custom string instead of STL's
+SimpleDB::string SimpleDB::to_string(const SimpleDB::Date &date) {
     int d, m, y;
     Date::julian_date_to_grigorian(date.m_julian_date, d, m, y);
-    return std::to_string(d) + std::string(".")
-           + std::to_string(m) + std::string(".")
-           + std::to_string(y);
+    char res[32];
+    snprintf(res, 32, "%d.%d.%d", d, m, y);
+    return {res};
 }
